@@ -6,7 +6,7 @@ const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
 
 const setTodoList = (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList));
 
-firstCheckOfTodoList();
+initialCheckOfTodoList();
 createTodoList();
 
 formElement.addEventListener('submit', (event) => {
@@ -16,21 +16,29 @@ formElement.addEventListener('submit', (event) => {
 
   if (newTodo) {
     const todoList = getTodoList();
-    if ((!todoList && !Array.isArray(todoList)) || !Array.isArray(getTodoList())) {
-      setTodoList([]);
-    } else {
-      todoList.push(newTodo);
-      setTodoList(todoList);
-      createTodoList();
+    todoList.push(newTodo);
+    setTodoList(todoList);
+    createTodoList();
+
+    try {
+      todoList.every((element) => String(element));
+    } catch (e) {
+      console.error(e);
     }
   }
   event.target.reset();
 });
 
-function firstCheckOfTodoList() {
-  const movies = getTodoList();
+function initialCheckOfTodoList() {
+  const todoList = getTodoList();
 
-  if (!movies && !Array.isArray(movies)) {
+  try {
+    todoList.every((element) => String(element));
+  } catch (e) {
+    console.error(e);
+  }
+
+  if (!todoList || !Array.isArray(todoList)) {
     setTodoList([]);
   }
 }
@@ -44,9 +52,9 @@ function addNewTodo() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
 
-  todoList.forEach((string, i) => {
+  todoList.forEach((element, index) => {
     toDoListHTML.innerHTML += `
-          <li class="toDoList__list-item">${i + 1}) ${string}
+          <li class="toDoList__list-item">${index + 1}) ${element}
               <div class="delete"></div>
           </li>
       `;
