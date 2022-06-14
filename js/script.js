@@ -1,10 +1,3 @@
-// 2) разбить код на понятные функции
-
-// 3) сохранять id ,и текст тудушки
-// {id: 477654, text: 'some text'}
-
-// 4) guid
-
 const toDoListHTML = document.querySelector('.toDoList__list');
 const addForm = document.querySelector('form.add');
 const addInput = addForm.querySelector('.adding__input');
