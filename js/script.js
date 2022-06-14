@@ -1,44 +1,50 @@
 const toDoListHTML = document.querySelector('.toDoList__list');
-const addForm = document.querySelector('form.add');
-const addInput = addForm.querySelector('.adding__input');
+const formElement = document.querySelector('form.add');
+const inputElement = formElement.querySelector('.adding__input');
 
-const getStrings = () => JSON.parse(localStorage.getItem('list'));
+const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
 
-const setStrings = (stringOfList) => localStorage.setItem('list', JSON.stringify(stringOfList));
+const setTodoList = (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList));
 
-createToDoList();
+firstCheckOfTodoList();
+createTodoList();
 
-addForm.addEventListener('submit', (event) => {
+formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  let newString = addInput.value;
+  let newTodo = inputElement.value;
 
-  if (newString) {
-    const stringOfList = getStrings();
-    if (
-      (!stringOfList && !Array.isArray(stringOfList)) ||
-      !Array.isArray(JSON.parse(localStorage.getItem('list')))
-    ) {
-      setStrings([]);
+  if (newTodo) {
+    const todoList = getTodoList();
+    if ((!todoList && !Array.isArray(todoList)) || !Array.isArray(getTodoList())) {
+      setTodoList([]);
     } else {
-      stringOfList.push(newString);
-      setStrings(stringOfList);
-      createToDoList();
+      todoList.push(newTodo);
+      setTodoList(todoList);
+      createTodoList();
     }
   }
   event.target.reset();
 });
 
-function createToDoList() {
-  addNewString();
-  deleteOneString();
+function firstCheckOfTodoList() {
+  const movies = getTodoList();
+
+  if (!movies && !Array.isArray(movies)) {
+    setTodoList([]);
+  }
 }
 
-function addNewString() {
-  toDoListHTML.innerHTML = '';
-  const stringOfList = getStrings();
+function createTodoList() {
+  addNewTodo();
+  addDeleteHandlers();
+}
 
-  stringOfList.forEach((string, i) => {
+function addNewTodo() {
+  toDoListHTML.innerHTML = '';
+  const todoList = getTodoList();
+
+  todoList.forEach((string, i) => {
     toDoListHTML.innerHTML += `
           <li class="toDoList__list-item">${i + 1}) ${string}
               <div class="delete"></div>
@@ -47,16 +53,16 @@ function addNewString() {
   });
 }
 
-function deleteOneString() {
+function addDeleteHandlers() {
   document.querySelectorAll('.delete').forEach((btn, i) => {
     btn.addEventListener('click', () => {
       btn.parentElement.remove();
 
-      const stringOfList = getStrings();
+      const todoList = getTodoList();
 
-      stringOfList.splice(i, 1);
-      setStrings(stringOfList);
-      createToDoList();
+      todoList.splice(i, 1);
+      setTodoList(todoList);
+      createTodoList();
     });
   });
 }
