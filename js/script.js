@@ -31,7 +31,7 @@ function сheckInitialTodoList() {
     if (
       !todoList ||
       !Array.isArray(todoList) ||
-      todoList.every((elem) => typeof elem === 'string')
+      !todoList.every((elem) => typeof elem === 'string')
     ) {
       setTodoList([]);
     }
