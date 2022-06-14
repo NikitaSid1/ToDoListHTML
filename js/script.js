@@ -28,11 +28,9 @@ formElement.addEventListener('submit', (event) => {
 function сheckInitialTodoList() {
   try {
     const todoList = getTodoList();
-    if (
-      !todoList ||
-      !Array.isArray(todoList) ||
-      !todoList.every((elem) => typeof elem === 'string')
-    ) {
+    const isInvalidTodoList =
+      !todoList || !Array.isArray(todoList) || !todoList.every((elem) => typeof elem === 'string');
+    if (isInvalidTodoList) {
       setTodoList([]);
     }
   } catch (e) {
