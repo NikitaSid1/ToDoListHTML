@@ -28,7 +28,13 @@ formElement.addEventListener('submit', (event) => {
 function сheckInitialTodoList() {
   try {
     const todoList = getTodoList();
-    todoList.every((elem) => typeof elem === 'string');
+    if (
+      !todoList ||
+      !Array.isArray(todoList) ||
+      todoList.every((elem) => typeof elem === 'string')
+    ) {
+      setTodoList([]);
+    }
   } catch (e) {
     setTodoList([]);
   }
