@@ -1,60 +1,53 @@
+// 2) разбить код на понятные функции
+
+// 3) сохранять id ,и текст тудушки
+// {id: 477654, text: 'some text'}
+
+// 4) guid
+
 const toDoListHTML = document.querySelector('.toDoList__list');
 const addForm = document.querySelector('form.add');
 const addInput = addForm.querySelector('.adding__input');
 
-const getFilms = () => {
-  try {
-    return JSON.parse(localStorage.getItem('movies'));
-  } catch (error) {
-    setFilms([]);
-    return [];
-  }
-};
+const getStrings = () => JSON.parse(localStorage.getItem('list'));
 
-const setFilms = (movies) => localStorage.setItem('movies', JSON.stringify(movies));
+const setStrings = (stringOfList) => localStorage.setItem('list', JSON.stringify(stringOfList));
 
-function checkLocalStorage() {
-  const movies = getFilms();
-
-  if (!movies && !Array.isArray(movies)) {
-    setFilms([]);
-  }
-}
-checkLocalStorage();
-
-createMovieList();
+createToDoList();
 
 addForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  let newMovie = addInput.value;
+  let newString = addInput.value;
 
-  if (newMovie) {
-    const movies = getFilms();
-
-    if (newMovie.length > 21) {
-      newMovie = `${newMovie.substring(0, 22)}...`;
+  if (newString) {
+    const stringOfList = getStrings();
+    if (
+      (!stringOfList && !Array.isArray(stringOfList)) ||
+      !Array.isArray(JSON.parse(localStorage.getItem('list')))
+    ) {
+      setStrings([]);
+    } else {
+      stringOfList.push(newString);
+      setStrings(stringOfList);
+      createToDoList();
     }
-
-    movies.push(newMovie);
-    setFilms(movies);
-    createMovieList();
   }
   event.target.reset();
 });
 
-function createMovieList() {
+function createToDoList() {
   addNewString();
   deleteOneString();
 }
 
 function addNewString() {
   toDoListHTML.innerHTML = '';
-  const movies = getFilms();
+  const stringOfList = getStrings();
 
-  movies.forEach((film, i) => {
+  stringOfList.forEach((string, i) => {
     toDoListHTML.innerHTML += `
-          <li class="toDoList__list-item">${i + 1}) ${film}
+          <li class="toDoList__list-item">${i + 1}) ${string}
               <div class="delete"></div>
           </li>
       `;
@@ -66,11 +59,11 @@ function deleteOneString() {
     btn.addEventListener('click', () => {
       btn.parentElement.remove();
 
-      const movies = getFilms();
+      const stringOfList = getStrings();
 
-      movies.splice(i, 1);
-      setFilms(movies);
-      createMovieList();
+      stringOfList.splice(i, 1);
+      setStrings(stringOfList);
+      createToDoList();
     });
   });
 }
