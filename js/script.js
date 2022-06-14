@@ -6,11 +6,13 @@ const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
 
 const setTodoList = (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList));
 
-initialCheckOfTodoList();
+сheckInitialTodoList();
 createTodoList();
 
 formElement.addEventListener('submit', (event) => {
   event.preventDefault();
+
+  сheckInitialTodoList();
 
   let newTodo = inputElement.value;
 
@@ -19,25 +21,17 @@ formElement.addEventListener('submit', (event) => {
     todoList.push(newTodo);
     setTodoList(todoList);
     createTodoList();
-
-    try {
-      todoList.every((element) => String(element));
-    } catch (e) {
-      console.error(e);
-    }
   }
   event.target.reset();
 });
 
-function initialCheckOfTodoList() {
+function сheckInitialTodoList() {
   const todoList = getTodoList();
-
   try {
-    todoList.every((element) => String(element));
+    todoList.every((elem) => typeof elem === 'string');
   } catch (e) {
     console.error(e);
   }
-
   if (!todoList || !Array.isArray(todoList)) {
     setTodoList([]);
   }
