@@ -26,13 +26,10 @@ formElement.addEventListener('submit', (event) => {
 });
 
 function сheckInitialTodoList() {
-  const todoList = getTodoList();
   try {
+    const todoList = getTodoList();
     todoList.every((elem) => typeof elem === 'string');
   } catch (e) {
-    console.error(e);
-  }
-  if (!todoList || !Array.isArray(todoList)) {
     setTodoList([]);
   }
 }
