@@ -1,76 +1,71 @@
 const toDoListHTML = document.querySelector('.toDoList__list');
-const addForm = document.querySelector('form.add');
-const addInput = addForm.querySelector('.adding__input');
+const formElement = document.querySelector('form.add');
+const inputElement = formElement.querySelector('.adding__input');
 
-const getFilms = () => {
-  try {
-    return JSON.parse(localStorage.getItem('movies'));
-  } catch (error) {
-    setFilms([]);
-    return [];
-  }
-};
+const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
 
-const setFilms = (movies) => localStorage.setItem('movies', JSON.stringify(movies));
+const setTodoList = (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList));
 
-function checkLocalStorage() {
-  const movies = getFilms();
+сheckInitialTodoList();
+createTodoList();
 
-  if (!movies && !Array.isArray(movies)) {
-    setFilms([]);
-  }
-}
-checkLocalStorage();
-
-createMovieList();
-
-addForm.addEventListener('submit', (event) => {
+formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  let newMovie = addInput.value;
+  сheckInitialTodoList();
 
-  if (newMovie) {
-    const movies = getFilms();
+  let newTodo = inputElement.value;
 
-    if (newMovie.length > 21) {
-      newMovie = `${newMovie.substring(0, 22)}...`;
-    }
-
-    movies.push(newMovie);
-    setFilms(movies);
-    createMovieList();
+  if (newTodo) {
+    const todoList = getTodoList();
+    todoList.push(newTodo);
+    setTodoList(todoList);
+    createTodoList();
   }
   event.target.reset();
 });
 
-function createMovieList() {
-  addNewString();
-  deleteOneString();
+function сheckInitialTodoList() {
+  try {
+    const todoList = getTodoList();
+    const isInvalidTodoList =
+      !todoList || !Array.isArray(todoList) || !todoList.every((elem) => typeof elem === 'string');
+    if (isInvalidTodoList) {
+      setTodoList([]);
+    }
+  } catch (e) {
+    setTodoList([]);
+  }
 }
 
-function addNewString() {
-  toDoListHTML.innerHTML = '';
-  const movies = getFilms();
+function createTodoList() {
+  addNewTodo();
+  addDeleteHandlers();
+}
 
-  movies.forEach((film, i) => {
+function addNewTodo() {
+  toDoListHTML.innerHTML = '';
+  const todoList = getTodoList();
+
+  todoList.forEach((element, index) => {
     toDoListHTML.innerHTML += `
-          <li class="toDoList__list-item">${i + 1}) ${film}
+          <li class="toDoList__list-item">${index + 1}) ${element}
               <div class="delete"></div>
           </li>
       `;
   });
 }
 
-function deleteOneString() {
+function addDeleteHandlers() {
   document.querySelectorAll('.delete').forEach((btn, i) => {
     btn.addEventListener('click', () => {
       btn.parentElement.remove();
 
-      const movies = getFilms();
+      const todoList = getTodoList();
 
-      movies.splice(i, 1);
-      setFilms(movies);
-      createMovieList();
+      todoList.splice(i, 1);
+      setTodoList(todoList);
+      createTodoList();
     });
   });
 }
