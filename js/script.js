@@ -50,22 +50,25 @@ function addNewTodo() {
 
   todoList.forEach((todo, index) => {
     const li = document.createElement('li');
-    const div = document.createElement('div');
-    const span = document.createElement('span');
-    const p = document.createElement('p');
-    const btn = document.createElement('button');
-
     li.classList.add('toDoList__list-item');
+
+    const div = document.createElement('div');
     div.classList.add('toDoList__list-div');
-    p.classList.add('toDoList__list-p');
+
+    const span = document.createElement('span');
     span.classList.add('toDoList__list-span');
+
+    const p = document.createElement('p');
+    p.classList.add('toDoList__list-p');
+
+    const btn = document.createElement('button');
     btn.classList.add('delete');
 
-    toDoListHTML.appendChild(li);
-    li.appendChild(div);
-    li.appendChild(btn);
     div.appendChild(p);
     div.appendChild(span);
+    li.appendChild(div);
+    li.appendChild(btn);
+    toDoListHTML.appendChild(li);
     span.innerText = todo;
     p.innerText = `${index + 1})`;
   });
