@@ -30,6 +30,7 @@ function сheckInitialTodoList() {
     const todoList = getTodoList();
     const isInvalidTodoList =
       !todoList || !Array.isArray(todoList) || !todoList.every((elem) => typeof elem === 'string');
+
     if (isInvalidTodoList) {
       setTodoList([]);
     }
@@ -47,12 +48,26 @@ function addNewTodo() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
 
-  todoList.forEach((element, index) => {
-    toDoListHTML.innerHTML += `
-          <li class="toDoList__list-item">${index + 1}) ${element}
-              <div class="delete"></div>
-          </li>
-      `;
+  todoList.forEach((todo, index) => {
+    const li = document.createElement('li');
+    const div = document.createElement('div');
+    const span = document.createElement('span');
+    const p = document.createElement('p');
+    const btn = document.createElement('button');
+
+    li.classList.add('toDoList__list-item');
+    div.classList.add('toDoList__list-div');
+    p.classList.add('toDoList__list-p');
+    span.classList.add('toDoList__list-span');
+    btn.classList.add('delete');
+
+    toDoListHTML.appendChild(li);
+    li.appendChild(div);
+    li.appendChild(btn);
+    div.appendChild(p);
+    div.appendChild(span);
+    span.innerText = todo;
+    p.innerText = `${index + 1})`;
   });
 }
 
