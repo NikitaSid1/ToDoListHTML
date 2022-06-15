@@ -29,15 +29,22 @@ button {
 }
 .toDoList__list-item {
   margin: 5px 55px;
-  font-size: 30px;
   list-style: none;
   position: relative;
-  // width: 400px;
+  font-size: 30px;
+  .toDoList__list-p {
+    margin-right: 10px;
+  }
+  .toDoList__list-div {
+    display: flex;
+    justify-content: left;
+  }
 
   .delete {
     content: '';
     display: block;
     position: absolute;
+    border: none;
     left: 873px;
     top: 50%;
     transform: translateY(-50%);

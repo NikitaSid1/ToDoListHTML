@@ -30,6 +30,7 @@ function сheckInitialTodoList() {
     const todoList = getTodoList();
     const isInvalidTodoList =
       !todoList || !Array.isArray(todoList) || !todoList.every((elem) => typeof elem === 'string');
+
     if (isInvalidTodoList) {
       setTodoList([]);
     }
@@ -39,33 +40,38 @@ function сheckInitialTodoList() {
 }
 
 function createTodoList() {
-  addNewTodo();
-  addDeleteHandlers();
-}
-
-function addNewTodo() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
 
-  todoList.forEach((element, index) => {
-    toDoListHTML.innerHTML += `
-          <li class="toDoList__list-item">${index + 1}) ${element}
-              <div class="delete"></div>
-          </li>
-      `;
-  });
-}
+  todoList.forEach((todo, index) => {
+    const li = document.createElement('li');
+    li.classList.add('toDoList__list-item');
 
-function addDeleteHandlers() {
-  document.querySelectorAll('.delete').forEach((btn, i) => {
+    const div = document.createElement('div');
+    div.classList.add('toDoList__list-div');
+
+    const span = document.createElement('span');
+    span.classList.add('toDoList__list-span');
+
+    const p = document.createElement('p');
+    p.classList.add('toDoList__list-p');
+
+    const btn = document.createElement('button');
+    btn.classList.add('delete');
     btn.addEventListener('click', () => {
-      btn.parentElement.remove();
-
       const todoList = getTodoList();
 
-      todoList.splice(i, 1);
+      todoList.splice(index, 1);
       setTodoList(todoList);
       createTodoList();
     });
+
+    div.appendChild(p);
+    p.innerText = `${index + 1})`;
+    div.appendChild(span);
+    span.innerText = todo;
+    li.appendChild(div);
+    li.appendChild(btn);
+    toDoListHTML.appendChild(li);
   });
 }
