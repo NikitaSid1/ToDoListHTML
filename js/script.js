@@ -39,39 +39,45 @@ function сheckInitialTodoList() {
   }
 }
 
+function createListElement(todo, index) {
+  const li = document.createElement('li');
+  li.classList.add('toDoList__list-item');
+
+  const div = document.createElement('div');
+  div.classList.add('toDoList__list-div');
+
+  const span = document.createElement('span');
+  span.classList.add('toDoList__list-span');
+
+  const p = document.createElement('p');
+  p.classList.add('toDoList__list-p');
+
+  const btn = document.createElement('button');
+  btn.classList.add('delete');
+  btn.addEventListener('click', () => {
+    const todoList = getTodoList();
+
+    todoList.splice(index, 1);
+    setTodoList(todoList);
+    createTodoList();
+  });
+
+  div.appendChild(p);
+  p.innerText = `${index + 1})`;
+  div.appendChild(span);
+  span.innerText = todo;
+  li.appendChild(div);
+  li.appendChild(btn);
+  return li;
+}
+
 function createTodoList() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
 
   todoList.forEach((todo, index) => {
-    const li = document.createElement('li');
-    li.classList.add('toDoList__list-item');
+    const liElement = createListElement(todo, index);
 
-    const div = document.createElement('div');
-    div.classList.add('toDoList__list-div');
-
-    const span = document.createElement('span');
-    span.classList.add('toDoList__list-span');
-
-    const p = document.createElement('p');
-    p.classList.add('toDoList__list-p');
-
-    const btn = document.createElement('button');
-    btn.classList.add('delete');
-    btn.addEventListener('click', () => {
-      const todoList = getTodoList();
-
-      todoList.splice(index, 1);
-      setTodoList(todoList);
-      createTodoList();
-    });
-
-    div.appendChild(p);
-    p.innerText = `${index + 1})`;
-    div.appendChild(span);
-    span.innerText = todo;
-    li.appendChild(div);
-    li.appendChild(btn);
-    toDoListHTML.appendChild(li);
+    toDoListHTML.appendChild(liElement);
   });
 }
