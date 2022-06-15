@@ -40,11 +40,6 @@ function сheckInitialTodoList() {
 }
 
 function createTodoList() {
-  addNewTodo();
-  addDeleteHandlers();
-}
-
-function addNewTodo() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
 
@@ -63,27 +58,20 @@ function addNewTodo() {
 
     const btn = document.createElement('button');
     btn.classList.add('delete');
-
-    div.appendChild(p);
-    div.appendChild(span);
-    li.appendChild(div);
-    li.appendChild(btn);
-    toDoListHTML.appendChild(li);
-    span.innerText = todo;
-    p.innerText = `${index + 1})`;
-  });
-}
-
-function addDeleteHandlers() {
-  document.querySelectorAll('.delete').forEach((btn, i) => {
     btn.addEventListener('click', () => {
-      btn.parentElement.remove();
-
       const todoList = getTodoList();
 
-      todoList.splice(i, 1);
+      todoList.splice(index, 1);
       setTodoList(todoList);
       createTodoList();
     });
+
+    div.appendChild(p);
+    p.innerText = `${index + 1})`;
+    div.appendChild(span);
+    span.innerText = todo;
+    li.appendChild(div);
+    li.appendChild(btn);
+    toDoListHTML.appendChild(li);
   });
 }
