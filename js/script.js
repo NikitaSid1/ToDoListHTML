@@ -68,6 +68,7 @@ function createListElement(todo, index) {
   span.innerText = todo;
   li.appendChild(div);
   li.appendChild(btn);
+
   return li;
 }
 
