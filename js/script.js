@@ -21,7 +21,7 @@ formElement.addEventListener('submit', (event) => {
 
   if (newTodo) {
     const todoList = getTodoList();
-    todoList.push({ id: generateId(), content: newTodo });
+    todoList.push({ id: generateId(), content: newTodo, done: false });
     setTodoList(todoList);
     createTodoList();
   }
@@ -44,12 +44,35 @@ function сheckInitialTodoList() {
 function createListElement(todo, index) {
   const li = document.createElement('li');
   li.classList.add('toDoList__list-item');
+  if (todo.done === true) {
+    li.classList.toggle('done');
+  }
 
   const div = document.createElement('div');
   div.classList.add('toDoList__list-div');
 
-  const span = document.createElement('span');
-  span.classList.add('toDoList__list-span');
+  const checkbox = document.createElement('button');
+  checkbox.classList.add('toDoList__list-checkbox');
+  if (todo.done === true) {
+    checkbox.style.backgroundImage = 'url(../icons/true.png)';
+  } else {
+    checkbox.style.backgroundImage = 'url(../icons/false.png)';
+  }
+  checkbox.addEventListener('click', () => {
+    const todoList = getTodoList();
+
+    const toggle = todoList.map((elem) => {
+      if (elem.id === todo.id && elem.done === false) {
+        elem.done = true;
+      } else if (elem.id === todo.id && elem.done === true) {
+        elem.done = false;
+      }
+      return elem;
+    });
+
+    setTodoList(toggle);
+    createTodoList();
+  });
 
   const p = document.createElement('p');
   p.classList.add('toDoList__list-p');
@@ -65,10 +88,9 @@ function createListElement(todo, index) {
     createTodoList();
   });
 
+  div.appendChild(checkbox);
   div.appendChild(p);
-  p.innerText = `${index + 1})`;
-  div.appendChild(span);
-  span.innerText = todo.content;
+  p.innerText = todo.content;
   li.appendChild(div);
   li.appendChild(btn);
 
