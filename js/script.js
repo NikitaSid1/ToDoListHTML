@@ -21,7 +21,7 @@ formElement.addEventListener('submit', (event) => {
 
   if (newTodo) {
     const todoList = getTodoList();
-    todoList.push(`{ id: ${generateId()}, content: ${newTodo} }`);
+    todoList.push({ id: generateId(), content: newTodo });
     setTodoList(todoList);
     createTodoList();
   }
@@ -31,9 +31,7 @@ formElement.addEventListener('submit', (event) => {
 function сheckInitialTodoList() {
   try {
     const todoList = getTodoList();
-    const isInvalidTodoList =
-      !todoList ||
-      !Array.isArray(todoList); /* || !todoList.every((elem) => typeof elem === 'string') */
+    const isInvalidTodoList = !todoList || !Array.isArray(todoList);
 
     if (isInvalidTodoList) {
       setTodoList([]);
@@ -61,16 +59,16 @@ function createListElement(todo, index) {
   btn.addEventListener('click', () => {
     const todoList = getTodoList();
 
-    todoList.splice(index, 1);
-    setTodoList(todoList);
+    const todoListChanged = todoList.filter((elem) => elem.id !== todo.id);
+    console.log(todoListChanged);
+    setTodoList(todoListChanged);
     createTodoList();
   });
 
   div.appendChild(p);
   p.innerText = `${index + 1})`;
   div.appendChild(span);
-  span.innerText = todo;
-  console.log(todo);
+  span.innerText = todo.content;
   li.appendChild(div);
   li.appendChild(btn);
 
