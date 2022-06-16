@@ -14,11 +14,14 @@ formElement.addEventListener('submit', (event) => {
 
   сheckInitialTodoList();
 
+  const generateId = () =>
+    [...Array(1)].reduce((a, b) => a + Math.random().toString(36).slice(2), '');
+
   let newTodo = inputElement.value;
 
   if (newTodo) {
     const todoList = getTodoList();
-    todoList.push(newTodo);
+    todoList.push(`{ id: ${generateId()}, content: ${newTodo} }`);
     setTodoList(todoList);
     createTodoList();
   }
@@ -29,7 +32,8 @@ function сheckInitialTodoList() {
   try {
     const todoList = getTodoList();
     const isInvalidTodoList =
-      !todoList || !Array.isArray(todoList) || !todoList.every((elem) => typeof elem === 'string');
+      !todoList ||
+      !Array.isArray(todoList); /* || !todoList.every((elem) => typeof elem === 'string') */
 
     if (isInvalidTodoList) {
       setTodoList([]);
@@ -66,6 +70,7 @@ function createListElement(todo, index) {
   p.innerText = `${index + 1})`;
   div.appendChild(span);
   span.innerText = todo;
+  console.log(todo);
   li.appendChild(div);
   li.appendChild(btn);
 
@@ -75,7 +80,6 @@ function createListElement(todo, index) {
 function createTodoList() {
   toDoListHTML.innerHTML = '';
   const todoList = getTodoList();
-
   todoList.forEach((todo, index) => {
     const liElement = createListElement(todo, index);
 
