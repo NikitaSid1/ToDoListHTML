@@ -28,14 +28,20 @@ formElement.addEventListener('submit', (event) => {
   event.target.reset();
 });
 
+// const isInvalidTodoList =
+//       !todoList ||
+//       !Array.isArray(todoList) ||
+//       !todoList.every((elem) => typeof Object.keys(elem) === 'string' || Boolean);
 function checkInitialTodoList() {
   try {
     const todoList = getTodoList();
+
     const isInvalidTodoList =
       !todoList ||
       !Array.isArray(todoList) ||
       !todoList.every(
-        (elem) => typeof elem.content === 'string' && elem.id === 'string' && elem.done === Boolean
+        ({ id, content, isDone }) =>
+          typeof id === 'string' && typeof content === 'string' && typeof isDone === 'boolean'
       );
 
     if (isInvalidTodoList) {
