@@ -28,10 +28,6 @@ formElement.addEventListener('submit', (event) => {
   event.target.reset();
 });
 
-// const isInvalidTodoList =
-//       !todoList ||
-//       !Array.isArray(todoList) ||
-//       !todoList.every((elem) => typeof Object.keys(elem) === 'string' || Boolean);
 function checkInitialTodoList() {
   try {
     const todoList = getTodoList();
