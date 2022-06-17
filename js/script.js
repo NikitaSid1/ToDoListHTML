@@ -34,7 +34,9 @@ function checkInitialTodoList() {
     const isInvalidTodoList =
       !todoList ||
       !Array.isArray(todoList) ||
-      !todoList.every((elem) => typeof elem.content === 'string');
+      !todoList.every(
+        (elem) => typeof elem.content === 'string' && elem.id === 'string' && elem.done === Boolean
+      );
 
     if (isInvalidTodoList) {
       setTodoList([]);
