@@ -8,7 +8,7 @@
   width: 1000px;
 }
 
-input {
+.adding__input {
   display: block;
   margin: 0 auto;
   width: 900px;
@@ -20,24 +20,40 @@ input {
   }
 }
 
-button {
+.toDoList__button {
   display: block;
   margin: 0 auto;
   width: 400px;
   height: 40px;
   font-size: 30px;
 }
+.done {
+  text-decoration: line-through;
+}
 .toDoList__list-item {
   margin: 5px 55px;
   list-style: none;
   position: relative;
   font-size: 30px;
-  .toDoList__list-p {
+  .toDoList__list-img {
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    background: center (center / cover) no-repeat;
     margin-right: 10px;
+    cursor: pointer;
+  }
+  .toDoList__list-checkbox {
+    display: none;
+  }
+  .toDoList__list-label {
+    display: flex;
+    align-items: center;
+    justify-content: left;
   }
   .toDoList__list-div {
     display: flex;
-    justify-content: left;
+    flex-direction: row;
   }
 
   .delete {
