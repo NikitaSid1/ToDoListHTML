@@ -1,6 +1,8 @@
 const toDoListHTML = document.querySelector('.toDoList__list');
 const formElement = document.querySelector('form.add');
 const inputElement = formElement.querySelector('.adding__input');
+const searchInput = document.querySelector('.search');
+const resetSearchButton = document.querySelector('.reset');
 
 const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
 
@@ -48,7 +50,7 @@ function checkInitialTodoList() {
   }
 }
 
-function createListElement(todo, index) {
+function createListElement(todo) {
   const li = document.createElement('li');
   li.classList.add('toDoList__list-item');
   if (todo.isDone) {
@@ -58,12 +60,13 @@ function createListElement(todo, index) {
   const div = document.createElement('div');
   div.classList.add('toDoList__list-div');
 
-  const label = document.createElement('label');
-  label.classList.add('toDoList__list-label');
+  const form = document.createElement('form');
+  form.classList.add('toDoList__list-form');
 
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
   checkbox.classList.add('toDoList__list-checkbox');
+  checkbox.checked = todo.isDone;
   checkbox.addEventListener('change', () => {
     const todoList = getTodoList();
     const changedTodoList = todoList.map((elem) =>
@@ -72,12 +75,6 @@ function createListElement(todo, index) {
     setTodoList(changedTodoList);
     createTodoList();
   });
-
-  const img = document.createElement('img');
-  img.classList.add('toDoList__list-img');
-  const tickImg = 'url(../icons/tick.svg)';
-  const crossImg = 'url(../icons/cross.svg)';
-  img.style.backgroundImage = todo.isDone ? tickImg : crossImg;
 
   const p = document.createElement('p');
   p.classList.add('toDoList__list-p');
@@ -92,9 +89,8 @@ function createListElement(todo, index) {
     createTodoList();
   });
 
-  label.appendChild(img);
-  label.appendChild(checkbox);
-  div.appendChild(label);
+  form.appendChild(checkbox);
+  div.appendChild(form);
   div.appendChild(p);
   p.innerText = todo.content;
   li.appendChild(div);
@@ -103,9 +99,24 @@ function createListElement(todo, index) {
   return li;
 }
 
-function createTodoList() {
+searchInput.addEventListener('input', (e) => {
+  const value = e.target.value.toLowerCase();
+  createTodoList(value);
+});
+
+resetSearchButton.addEventListener('click', () => {
+  searchInput.value = '';
+  createTodoList();
+});
+
+function createTodoList(searchInputValue) {
   toDoListHTML.innerHTML = '';
-  const todoList = getTodoList();
+  let todoList = getTodoList();
+
+  if (searchInputValue) {
+    todoList = todoList.filter((elem) => elem.content.toLowerCase().includes(searchInputValue));
+  }
+
   todoList.forEach((todo, index) => {
     const liElement = createListElement(todo, index);
 

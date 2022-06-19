@@ -4,6 +4,7 @@
   padding: 0;
 }
 .container {
+  position: relative;
   margin: 0 auto;
   width: 1000px;
 }
@@ -26,6 +27,7 @@
   width: 400px;
   height: 40px;
   font-size: 30px;
+  cursor: pointer;
 }
 .done {
   text-decoration: line-through;
@@ -35,18 +37,13 @@
   list-style: none;
   position: relative;
   font-size: 30px;
-  .toDoList__list-img {
-    border-radius: 100%;
-    width: 25px;
-    height: 25px;
-    background: center (center / cover) no-repeat;
+  .toDoList__list-checkbox {
+    width: 20px;
+    height: 20px;
     margin-right: 10px;
     cursor: pointer;
   }
-  .toDoList__list-checkbox {
-    display: none;
-  }
-  .toDoList__list-label {
+  .toDoList__list-form {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -69,4 +66,22 @@
     background: url('../icons/trash.png') center (center / cover) no-repeat;
     cursor: pointer;
   }
+}
+
+.search {
+  position: absolute;
+  top: 57px;
+  right: 146px;
+  width: 150px;
+  height: 25px;
+  font-size: 20px;
+}
+.reset {
+  padding: 0 5px;
+  position: absolute;
+  top: 57px;
+  right: 50px;
+  width: 92px;
+  height: 25px;
+  font-size: 18px;
 }
