@@ -87,10 +87,9 @@
   height: 25px;
   font-size: 18px;
 }
-
+.completed {
+  border-top: 2px black solid;
+}
 .hide {
   display: none;
-}
-.show {
-  border-top: 2px black solid;
 }

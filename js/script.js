@@ -134,9 +134,7 @@ function createTodoList(searchInputValue) {
 
   if (completedTodoList.length) {
     completedTodoListElement.classList.remove('hide');
-    completedTodoListElement.classList.add('show');
   } else {
     completedTodoListElement.classList.add('hide');
-    completedTodoListElement.classList.remove('show');
   }
 }
