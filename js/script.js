@@ -1,4 +1,4 @@
-const incompletedTodoListElement = document.querySelector('.incomplete');
+const incompletedTodoListElement = document.querySelector('.incompleted');
 const completedTodoListElement = document.querySelector('.completed');
 const formElement = document.querySelector('form.add');
 const inputElement = formElement.querySelector('.adding__input');
@@ -131,4 +131,12 @@ function createTodoList(searchInputValue) {
 
     completedTodoListElement.appendChild(liElement);
   });
+
+  if (completedTodoList.length) {
+    completedTodoListElement.classList.remove('hide');
+    completedTodoListElement.classList.add('show');
+  } else {
+    completedTodoListElement.classList.add('hide');
+    completedTodoListElement.classList.remove('show');
+  }
 }

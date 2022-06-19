@@ -88,9 +88,9 @@
   font-size: 18px;
 }
 
-.completed {
+.hide {
+  display: none;
+}
+.show {
   border-top: 2px black solid;
-  &:empty {
-    display: none;
-  }
 }
