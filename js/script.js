@@ -59,9 +59,6 @@ function createListElement(todo) {
   const div = document.createElement('div');
   div.classList.add('toDoList__list-div');
 
-  const form = document.createElement('form');
-  form.classList.add('toDoList__list-form');
-
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
   checkbox.classList.add('toDoList__list-checkbox');
@@ -88,8 +85,7 @@ function createListElement(todo) {
     createTodoList();
   });
 
-  form.appendChild(checkbox);
-  div.appendChild(form);
+  div.appendChild(checkbox);
   div.appendChild(p);
   p.innerText = todo.content;
   li.appendChild(div);
