@@ -4,9 +4,11 @@ const inputElement = formElement.querySelector('.adding__input');
 const searchInput = document.querySelector('.search');
 const resetSearchButton = document.querySelector('.reset');
 
-const getTodoList = () => JSON.parse(localStorage.getItem('todoList'));
-
-const setTodoList = (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList));
+const utils = {
+  setTodoList: (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList)),
+  getTodoList: () => JSON.parse(localStorage.getItem('todoList')),
+  generateId: () => [...Array(2)].reduce((a) => a + Math.random().toString(36).slice(2), ''),
+};
 
 checkInitialTodoList();
 createTodoList();
@@ -16,15 +18,12 @@ formElement.addEventListener('submit', (event) => {
 
   checkInitialTodoList();
 
-  const generateId = () =>
-    [...Array(2)].reduce((a, b) => a + Math.random().toString(36).slice(2), '');
-
-  let newTodo = inputElement.value;
+  const newTodo = inputElement.value;
 
   if (newTodo) {
-    const todoList = getTodoList();
-    todoList.push({ id: generateId(), content: newTodo, isDone: false });
-    setTodoList(todoList);
+    const todoList = utils.getTodoList();
+    todoList.push({ id: utils.generateId(), content: newTodo, isDone: false });
+    utils.setTodoList(todoList);
     createTodoList();
   }
   event.target.reset();
@@ -32,7 +31,7 @@ formElement.addEventListener('submit', (event) => {
 
 function checkInitialTodoList() {
   try {
-    const todoList = getTodoList();
+    const todoList = utils.getTodoList();
 
     const isInvalidTodoList =
       !todoList ||
@@ -43,10 +42,10 @@ function checkInitialTodoList() {
       );
 
     if (isInvalidTodoList) {
-      setTodoList([]);
+      utils.setTodoList([]);
     }
   } catch (e) {
-    setTodoList([]);
+    utils.setTodoList([]);
   }
 }
 
@@ -68,11 +67,11 @@ function createListElement(todo) {
   checkbox.classList.add('toDoList__list-checkbox');
   checkbox.checked = todo.isDone;
   checkbox.addEventListener('change', () => {
-    const todoList = getTodoList();
+    const todoList = utils.getTodoList();
     const changedTodoList = todoList.map((elem) =>
       elem.id === todo.id ? { ...elem, isDone: !elem.isDone } : elem
     );
-    setTodoList(changedTodoList);
+    utils.setTodoList(changedTodoList);
     createTodoList();
   });
 
@@ -82,10 +81,10 @@ function createListElement(todo) {
   const btn = document.createElement('button');
   btn.classList.add('delete');
   btn.addEventListener('click', () => {
-    const todoList = getTodoList();
+    const todoList = utils.getTodoList();
 
     const changedTodoList = todoList.filter((elem) => elem.id !== todo.id);
-    setTodoList(changedTodoList);
+    utils.setTodoList(changedTodoList);
     createTodoList();
   });
 
@@ -111,7 +110,7 @@ resetSearchButton.addEventListener('click', () => {
 
 function createTodoList(searchInputValue) {
   toDoListHTML.innerHTML = '';
-  let todoList = getTodoList();
+  let todoList = utils.getTodoList();
 
   if (searchInputValue) {
     todoList = todoList.filter((elem) => elem.content.toLowerCase().includes(searchInputValue));
