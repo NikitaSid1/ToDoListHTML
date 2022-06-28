@@ -1,10 +1,10 @@
-const utils = {
+export const utils = {
   setTodoList: (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList)),
   getTodoList: () => JSON.parse(localStorage.getItem('todoList')),
   generateId: () => [...Array(2)].reduce((a) => a + Math.random().toString(36).slice(2), ''),
 };
 
-function checkInitialTodoList() {
+export function checkInitialTodoList() {
   try {
     const todoList = utils.getTodoList();
 
@@ -23,5 +23,3 @@ function checkInitialTodoList() {
     utils.setTodoList([]);
   }
 }
-
-export { utils, checkInitialTodoList };
