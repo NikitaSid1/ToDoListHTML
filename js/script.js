@@ -1,15 +1,11 @@
+import { utils, checkInitialTodoList } from './utils';
+
 const incompletedTodoListElement = document.querySelector('.incompleted');
 const completedTodoListElement = document.querySelector('.completed');
 const formElement = document.querySelector('form.add');
 const inputElement = formElement.querySelector('.adding__input');
 const searchInput = document.querySelector('.search');
 const resetSearchButton = document.querySelector('.reset');
-
-const utils = {
-  setTodoList: (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList)),
-  getTodoList: () => JSON.parse(localStorage.getItem('todoList')),
-  generateId: () => [...Array(2)].reduce((a) => a + Math.random().toString(36).slice(2), ''),
-};
 
 checkInitialTodoList();
 createTodoList();
@@ -29,26 +25,6 @@ formElement.addEventListener('submit', (event) => {
   }
   event.target.reset();
 });
-
-function checkInitialTodoList() {
-  try {
-    const todoList = utils.getTodoList();
-
-    const isInvalidTodoList =
-      !todoList ||
-      !Array.isArray(todoList) ||
-      !todoList.every(
-        ({ id, content, isDone }) =>
-          typeof id === 'string' && typeof content === 'string' && typeof isDone === 'boolean'
-      );
-
-    if (isInvalidTodoList) {
-      utils.setTodoList([]);
-    }
-  } catch (e) {
-    utils.setTodoList([]);
-  }
-}
 
 function createListElement(todo) {
   const li = document.createElement('li');
