@@ -38,17 +38,20 @@
   list-style: none;
   position: relative;
   font-size: 30px;
+
   .toDoList__list-checkbox {
     width: 20px;
     height: 20px;
     margin-right: 10px;
     cursor: pointer;
   }
+
   .toDoList__list-form {
     display: flex;
     align-items: center;
     justify-content: left;
   }
+
   .toDoList__list-div {
     display: flex;
     align-items: center;
@@ -66,6 +69,28 @@
     width: 20px;
     height: 20px;
     background: url('../icons/trash.png') center (center / cover) no-repeat;
+    cursor: pointer;
+  }
+
+  .edit {
+    display: block;
+    position: absolute;
+    left: 830px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .btnDone {
+    display: block;
+    position: absolute;
+    left: 800px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 20px;
     cursor: pointer;
   }
 }

@@ -52,9 +52,9 @@ function createListElement(todo) {
   const p = document.createElement('p');
   p.classList.add('toDoList__list-p');
 
-  const btn = document.createElement('button');
-  btn.classList.add('delete');
-  btn.addEventListener('click', () => {
+  const btnDelete = document.createElement('button');
+  btnDelete.classList.add('delete');
+  btnDelete.addEventListener('click', () => {
     const todoList = utils.getTodoList();
 
     const changedTodoList = todoList.filter((elem) => elem.id !== todo.id);
@@ -62,11 +62,35 @@ function createListElement(todo) {
     createTodoList();
   });
 
+  const btnEdit = document.createElement('button');
+  btnEdit.classList.add('edit');
+  btnEdit.innerText = 'edit';
+  btnEdit.addEventListener('click', () => {
+    if (p.style.backgroundColor === '') {
+      p.contentEditable = true;
+      p.style.backgroundColor = '#dddbdb';
+    } else {
+      const todoList = utils.getTodoList();
+
+      p.contentEditable = false;
+      p.style.backgroundColor = '';
+      todo.content = p.innerText;
+
+      const changedTodoList = todoList.map((elem) =>
+        elem.id === todo.id ? { ...elem, content: p.innerText } : elem
+      );
+
+      utils.setTodoList(changedTodoList);
+      createTodoList();
+    }
+  });
+
   div.appendChild(checkbox);
   div.appendChild(p);
   p.innerText = todo.content;
   li.appendChild(div);
-  li.appendChild(btn);
+  li.appendChild(btnDelete);
+  li.appendChild(btnEdit);
 
   return li;
 }
