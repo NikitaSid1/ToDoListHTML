@@ -8,36 +8,59 @@
   margin: 0 auto;
   width: 1000px;
 }
-
+.add {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0px;
+}
 .adding__input {
-  display: block;
-  margin: 0 auto;
-  width: 900px;
+  margin-right: 10px;
+  border-radius: 4px;
+  width: 890px;
   height: 50px;
-  font-size: 35px;
+  font-size: 30px;
   padding: 0 40px;
+  border: 2px solid #878585;
+  &:focus {
+    outline: none !important;
+    border-color: rgba(0, 195, 255);
+  }
   &::placeholder {
     text-align: center;
   }
 }
-
 .toDoList__button {
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  width: 400px;
-  height: 40px;
-  font-size: 30px;
+  border-radius: 4px;
+  width: 100px;
+  height: 50px;
+  font-size: 25px;
+  border: none;
+  color: #fff;
   cursor: pointer;
+  background-color: rgb(0, 195, 255);
+  &:hover {
+    background-color: rgba(0, 195, 255);
+    box-shadow: rgba(0, 195, 255, 0.6) 0px 0px 0px 2px;
+  }
 }
-.done {
-  text-decoration: line-through;
-}
+
 .toDoList__list-item {
-  margin: 5px 55px;
+  margin: 5px 35px;
   list-style: none;
   position: relative;
   font-size: 30px;
+  border-bottom: 2px solid rgb(135, 133, 133);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .toDoList__list-p {
+    padding: 5px 10px;
+    font-size: 30px;
+    min-height: 45px;
+    margin-bottom: 5px;
+    word-wrap: break-word;
+  }
 
   .toDoList__list-checkbox {
     width: 20px;
@@ -55,32 +78,25 @@
   .toDoList__list-div {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    width: -webkit-fill-available;
   }
 
   .delete {
-    content: '';
     display: block;
-    position: absolute;
     border: none;
-    left: 873px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background: url('../icons/trash.png') center (center / cover) no-repeat;
+    width: 30px;
+    height: 30px;
+    background: url('../icons/delete.png') center (center / cover) no-repeat;
     cursor: pointer;
   }
 
   .edit {
     display: block;
-    position: absolute;
-    left: 830px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 35px;
-    height: 20px;
+    border: none;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+    background: url('../icons/edit.png') center (center / cover) no-repeat;
   }
 
   .btnDone {
@@ -94,26 +110,43 @@
     cursor: pointer;
   }
 }
-
 .search {
-  position: absolute;
-  top: 57px;
-  right: 146px;
-  width: 150px;
-  height: 25px;
-  font-size: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 10px 0;
+  .search__input {
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 20px;
+    border: 2px solid #878585;
+    &:focus {
+      outline: none !important;
+      border-color: rgba(0, 195, 255);
+    }
+  }
 }
+
 .reset {
+  cursor: pointer;
+  border-radius: 4px;
   padding: 0 5px;
-  position: absolute;
-  top: 57px;
-  right: 50px;
-  width: 92px;
-  height: 25px;
+  width: 100px;
   font-size: 18px;
+  color: white;
+  border: none;
+  background-color: rgb(0, 195, 255);
+  &:hover {
+    background-color: rgba(0, 195, 255);
+    box-shadow: rgba(0, 195, 255, 0.6) 0px 0px 0px 2px;
+  }
 }
+
 .completed {
-  border-top: 2px black solid;
+  background-color: rgb(0, 255, 38, 0.3);
+  border-radius: 24px;
+  margin-top: -7px;
+  border-top: 3px rgb(135, 133, 133) solid;
 }
 .hide {
   display: none;

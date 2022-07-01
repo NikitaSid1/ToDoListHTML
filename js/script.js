@@ -3,9 +3,9 @@ import { utils, checkInitialTodoList } from './utils';
 const incompletedTodoListElement = document.querySelector('.incompleted');
 const completedTodoListElement = document.querySelector('.completed');
 const formElement = document.querySelector('form.add');
-const inputElement = formElement.querySelector('.adding__input');
 const searchInput = document.querySelector('.search');
 const resetSearchButton = document.querySelector('.reset');
+const inputElement = formElement.querySelector('.adding__input');
 
 checkInitialTodoList();
 createTodoList();
@@ -24,6 +24,16 @@ formElement.addEventListener('submit', (event) => {
     createTodoList();
   }
   event.target.reset();
+});
+
+searchInput.addEventListener('input', (e) => {
+  const value = e.target.value.toLowerCase();
+  createTodoList(value);
+});
+
+resetSearchButton.addEventListener('click', () => {
+  searchInput.value = '';
+  createTodoList();
 });
 
 function createListElement(todo) {
@@ -49,35 +59,41 @@ function createListElement(todo) {
     createTodoList();
   });
 
-  const p = document.createElement('p');
-  p.classList.add('toDoList__list-p');
+  const editArea = document.createElement('p');
+  editArea.classList.add('toDoList__list-p');
 
   const btnDelete = document.createElement('button');
   btnDelete.classList.add('delete');
   btnDelete.addEventListener('click', () => {
+    deleteElement();
+  });
+
+  function deleteElement() {
     const todoList = utils.getTodoList();
 
     const changedTodoList = todoList.filter((elem) => elem.id !== todo.id);
     utils.setTodoList(changedTodoList);
     createTodoList();
-  });
+  }
 
   const btnEdit = document.createElement('button');
   btnEdit.classList.add('edit');
-  btnEdit.innerText = 'edit';
   btnEdit.addEventListener('click', () => {
-    if (p.style.backgroundColor === '') {
-      p.contentEditable = true;
-      p.style.backgroundColor = '#dddbdb';
+    if (todo.content.trim() == false) {
+      deleteElement();
+    }
+
+    if (editArea.style.backgroundColor === '') {
+      editArea.style.backgroundColor = '#dddbdb';
+      editArea.contentEditable = true;
+      editArea.focus();
     } else {
+      editArea.contentEditable = false;
+      todo.content.trim();
+
       const todoList = utils.getTodoList();
-
-      p.contentEditable = false;
-      p.style.backgroundColor = '';
-      todo.content = p.innerText;
-
       const changedTodoList = todoList.map((elem) =>
-        elem.id === todo.id ? { ...elem, content: p.innerText } : elem
+        elem.id === todo.id ? { ...elem, content: editArea.innerText.replace(/\s+/g, ' ') } : elem
       );
 
       utils.setTodoList(changedTodoList);
@@ -86,24 +102,14 @@ function createListElement(todo) {
   });
 
   div.appendChild(checkbox);
-  div.appendChild(p);
-  p.innerText = todo.content;
+  div.appendChild(editArea);
+  editArea.innerText = todo.content;
   li.appendChild(div);
   li.appendChild(btnDelete);
   li.appendChild(btnEdit);
 
   return li;
 }
-
-searchInput.addEventListener('input', (e) => {
-  const value = e.target.value.toLowerCase();
-  createTodoList(value);
-});
-
-resetSearchButton.addEventListener('click', () => {
-  searchInput.value = '';
-  createTodoList();
-});
 
 function createTodoList(searchInputValue) {
   let todoList = utils.getTodoList();
