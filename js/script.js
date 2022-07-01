@@ -78,14 +78,20 @@ function createListElement(todo) {
 
   const btnEdit = document.createElement('button');
   btnEdit.classList.add('edit');
+  function editAreaStyles() {
+    editArea.style.backgroundColor = 'rgba(0, 195, 255, 0.1)';
+    editArea.style.outline = 'none';
+    editArea.style.borderRadius = '5px';
+    editArea.style.border = '2px solid rgba(0, 195, 255)';
+  }
   btnEdit.addEventListener('click', () => {
     if (todo.content.trim() == false) {
       deleteElement();
     }
 
     if (editArea.style.backgroundColor === '') {
-      editArea.style.backgroundColor = '#dddbdb';
       editArea.contentEditable = true;
+      editAreaStyles();
       editArea.focus();
     } else {
       editArea.contentEditable = false;
@@ -142,5 +148,11 @@ function createTodoList(searchInputValue) {
     completedTodoListElement.classList.remove('hide');
   } else {
     completedTodoListElement.classList.add('hide');
+  }
+
+  if (incompletedTodoList.length) {
+    incompletedTodoListElement.classList.remove('hide');
+  } else {
+    incompletedTodoListElement.classList.add('hide');
   }
 }
