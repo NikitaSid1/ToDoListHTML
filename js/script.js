@@ -12,9 +12,7 @@ createTodoList();
 
 formElement.addEventListener('submit', (event) => {
   event.preventDefault();
-
   checkInitialTodoList();
-
   const newTodo = inputElement.value;
 
   if (newTodo) {
@@ -150,14 +148,14 @@ function createTodoList(searchInputValue) {
   });
 
   if (completedTodoList.length) {
-    completedTodoListElement.classList.remove('hide');
+    completedTodoListElement.classList.remove('noShow');
   } else {
-    completedTodoListElement.classList.add('hide');
+    completedTodoListElement.classList.add('noShow');
   }
 
   if (incompletedTodoList.length) {
-    incompletedTodoListElement.classList.remove('hide');
+    incompletedTodoListElement.classList.remove('noShow');
   } else {
-    incompletedTodoListElement.classList.add('hide');
+    incompletedTodoListElement.classList.add('noShow');
   }
 }
