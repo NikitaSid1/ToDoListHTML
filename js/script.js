@@ -26,8 +26,8 @@ formElement.addEventListener('submit', (event) => {
   event.target.reset();
 });
 
-searchInput.addEventListener('input', (e) => {
-  const value = e.target.value.toLowerCase();
+searchInput.addEventListener('input', (event) => {
+  const value = event.target.value.toLowerCase();
   createTodoList(value);
 });
 
@@ -59,9 +59,6 @@ function createListElement(todo) {
     createTodoList();
   });
 
-  const editArea = document.createElement('p');
-  editArea.classList.add('toDoList__list-p');
-
   const btnDelete = document.createElement('button');
   btnDelete.classList.add('delete');
   btnDelete.addEventListener('click', () => {
@@ -76,30 +73,38 @@ function createListElement(todo) {
     createTodoList();
   }
 
+  const todoContent = document.createElement('p');
+  todoContent.classList.add('toDoList__list-paragraph');
+  todoContent.setAttribute('data-edit', 'false');
+
+  function todoContentStyles() {
+    todoContent.style.backgroundColor = 'rgba(0, 195, 255, 0.1)';
+    todoContent.style.outline = 'none';
+    todoContent.style.borderRadius = '5px';
+    todoContent.style.border = '2px solid rgba(0, 195, 255, 1)';
+  }
+
   const btnEdit = document.createElement('button');
   btnEdit.classList.add('edit');
-  function editAreaStyles() {
-    editArea.style.backgroundColor = 'rgba(0, 195, 255, 0.1)';
-    editArea.style.outline = 'none';
-    editArea.style.borderRadius = '5px';
-    editArea.style.border = '2px solid rgba(0, 195, 255)';
-  }
-  btnEdit.addEventListener('click', () => {
-    if (todo.content.trim() == false) {
-      deleteElement();
-    }
 
-    if (editArea.style.backgroundColor === '') {
-      editArea.contentEditable = true;
-      editAreaStyles();
-      editArea.focus();
+  btnEdit.addEventListener('click', () => {
+    if (todoContent.dataset.edit === 'false') {
+      todoContent.dataset.edit = 'true';
+      todoContent.contentEditable = true;
+
+      todoContentStyles();
+      todoContent.focus();
     } else {
-      editArea.contentEditable = false;
-      todo.content.trim();
+      todoContent.dataset.edit = 'false';
+      todoContent.contentEditable = false;
+
+      if (todo.content === '') {
+        return deleteElement();
+      }
 
       const todoList = utils.getTodoList();
       const changedTodoList = todoList.map((elem) =>
-        elem.id === todo.id ? { ...elem, content: editArea.innerText.replace(/\s+/g, ' ') } : elem
+        elem.id === todo.id ? { ...elem, content: todoContent.innerText } : elem
       );
 
       utils.setTodoList(changedTodoList);
@@ -108,11 +113,11 @@ function createListElement(todo) {
   });
 
   div.appendChild(checkbox);
-  div.appendChild(editArea);
-  editArea.innerText = todo.content;
+  div.appendChild(todoContent);
+  todoContent.innerText = todo.content;
   li.appendChild(div);
-  li.appendChild(btnDelete);
   li.appendChild(btnEdit);
+  li.appendChild(btnDelete);
 
   return li;
 }
