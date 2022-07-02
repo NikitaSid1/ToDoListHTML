@@ -1,6 +1,6 @@
 export const utils = {
-  setTodoList: (todoList) => localStorage.setItem('todoList', JSON.stringify(todoList)),
-  getTodoList: () => JSON.parse(localStorage.getItem('todoList')),
+  setTodoList: (todoList) => localStorage.setItem('todoList2', JSON.stringify(todoList)),
+  getTodoList: () => JSON.parse(localStorage.getItem('todoList2')),
   generateId: () => [...Array(2)].reduce((a) => a + Math.random().toString(36).slice(2), ''),
 };
 
@@ -11,7 +11,7 @@ export function checkInitialTodoList() {
     const isInvalidTodoList =
       !todoList ||
       !Array.isArray(todoList) ||
-      !todoList.every(
+      !todoList?.every(
         ({ id, content, isDone }) =>
           typeof id === 'string' && typeof content === 'string' && typeof isDone === 'boolean'
       );

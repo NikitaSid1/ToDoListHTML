@@ -13,9 +13,8 @@ createTodoList();
 formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  checkInitialTodoList();
-
   const newTodo = inputElement.value;
+  checkInitialTodoList();
 
   if (newTodo) {
     const todoList = utils.getTodoList();
@@ -150,14 +149,14 @@ function createTodoList(searchInputValue) {
   });
 
   if (completedTodoList.length) {
-    completedTodoListElement.classList.remove('hide');
+    completedTodoListElement.classList.remove('hide22222222');
   } else {
-    completedTodoListElement.classList.add('hide');
+    completedTodoListElement.classList.add('hide22222222');
   }
 
   if (incompletedTodoList.length) {
-    incompletedTodoListElement.classList.remove('hide');
+    incompletedTodoListElement.classList.remove('hide22222222');
   } else {
-    incompletedTodoListElement.classList.add('hide');
+    incompletedTodoListElement.classList.add('hide22222222');
   }
 }
