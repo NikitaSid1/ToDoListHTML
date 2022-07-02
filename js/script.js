@@ -149,14 +149,14 @@ function createTodoList(searchInputValue) {
   });
 
   if (completedTodoList.length) {
-    completedTodoListElement.classList.remove('hide22222222');
+    completedTodoListElement.classList.remove('noShow');
   } else {
-    completedTodoListElement.classList.add('hide22222222');
+    completedTodoListElement.classList.add('noShow');
   }
 
   if (incompletedTodoList.length) {
-    incompletedTodoListElement.classList.remove('hide22222222');
+    incompletedTodoListElement.classList.remove('noShow');
   } else {
-    incompletedTodoListElement.classList.add('hide22222222');
+    incompletedTodoListElement.classList.add('noShow');
   }
 }
