@@ -3,9 +3,9 @@ import { utils, checkInitialTodoList } from './utils';
 const incompletedTodoListElement = document.querySelector('.incompleted');
 const completedTodoListElement = document.querySelector('.completed');
 const formElement = document.querySelector('form.add');
-const inputElement = formElement.querySelector('.adding__input');
 const searchInput = document.querySelector('.search');
 const resetSearchButton = document.querySelector('.reset');
+const inputElement = formElement.querySelector('.adding__input');
 
 checkInitialTodoList();
 createTodoList();
@@ -24,6 +24,16 @@ formElement.addEventListener('submit', (event) => {
     createTodoList();
   }
   event.target.reset();
+});
+
+searchInput.addEventListener('input', (event) => {
+  const value = event.target.value.toLowerCase();
+  createTodoList(value);
+});
+
+resetSearchButton.addEventListener('click', () => {
+  searchInput.value = '';
+  createTodoList();
 });
 
 function createListElement(todo) {
@@ -49,37 +59,68 @@ function createListElement(todo) {
     createTodoList();
   });
 
-  const p = document.createElement('p');
-  p.classList.add('toDoList__list-p');
+  const btnDelete = document.createElement('button');
+  btnDelete.classList.add('delete');
+  btnDelete.addEventListener('click', () => {
+    deleteElement();
+  });
 
-  const btn = document.createElement('button');
-  btn.classList.add('delete');
-  btn.addEventListener('click', () => {
+  function deleteElement() {
     const todoList = utils.getTodoList();
 
     const changedTodoList = todoList.filter((elem) => elem.id !== todo.id);
     utils.setTodoList(changedTodoList);
     createTodoList();
+  }
+
+  const todoContent = document.createElement('p');
+  todoContent.classList.add('toDoList__list-paragraph');
+  todoContent.setAttribute('data-edit', 'false');
+
+  function todoContentStyles() {
+    todoContent.style.backgroundColor = 'rgba(0, 195, 255, 0.1)';
+    todoContent.style.outline = 'none';
+    todoContent.style.borderRadius = '5px';
+    todoContent.style.border = '2px solid rgba(0, 195, 255, 1)';
+  }
+
+  const btnEdit = document.createElement('button');
+  btnEdit.classList.add('edit');
+
+  btnEdit.addEventListener('click', () => {
+    if (todoContent.dataset.edit === 'false') {
+      todoContent.dataset.edit = 'true';
+      todoContent.contentEditable = true;
+
+      todoContentStyles();
+      todoContent.focus();
+    } else {
+      todoContent.dataset.edit = 'false';
+      todoContent.contentEditable = false;
+
+      if (todo.content === '') {
+        return deleteElement();
+      }
+
+      const todoList = utils.getTodoList();
+      const changedTodoList = todoList.map((elem) =>
+        elem.id === todo.id ? { ...elem, content: todoContent.innerText } : elem
+      );
+
+      utils.setTodoList(changedTodoList);
+      createTodoList();
+    }
   });
 
   div.appendChild(checkbox);
-  div.appendChild(p);
-  p.innerText = todo.content;
+  div.appendChild(todoContent);
+  todoContent.innerText = todo.content;
   li.appendChild(div);
-  li.appendChild(btn);
+  li.appendChild(btnEdit);
+  li.appendChild(btnDelete);
 
   return li;
 }
-
-searchInput.addEventListener('input', (e) => {
-  const value = e.target.value.toLowerCase();
-  createTodoList(value);
-});
-
-resetSearchButton.addEventListener('click', () => {
-  searchInput.value = '';
-  createTodoList();
-});
 
 function createTodoList(searchInputValue) {
   let todoList = utils.getTodoList();
@@ -112,5 +153,11 @@ function createTodoList(searchInputValue) {
     completedTodoListElement.classList.remove('hide');
   } else {
     completedTodoListElement.classList.add('hide');
+  }
+
+  if (incompletedTodoList.length) {
+    incompletedTodoListElement.classList.remove('hide');
+  } else {
+    incompletedTodoListElement.classList.add('hide');
   }
 }

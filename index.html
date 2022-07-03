@@ -5,27 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ToDoListJS</title>
-    <link rel="stylesheet" href="css/style.min.css" />
+    <link rel="stylesheet" href="bundleJS/css/style.min.css" />
   </head>
   <body>
     <div class="container">
       <section class="toDoList">
         <form class="add">
-          <input class="adding__input" type="text" placeholder="Text here..." />
-          <button class="toDoList__button">Click</button>
+          <input class="adding__input" type="text" placeholder="New task..." />
+          <button class="toDoList__button">ADD</button>
         </form>
+
+        <form class="search">
+          <button class="reset">Reset</button>
+          <input class="search__input" type="text" placeholder="Search" />
+        </form>
+
         <ul class="toDoList__list incompleted"></ul>
       </section>
 
       <section>
         <ul class="toDoList__list completed"></ul>
-      </section>
-
-      <section>
-        <form>
-          <input class="search" type="text" placeholder="Search" />
-          <button class="reset">Reset</button>
-        </form>
       </section>
     </div>
 
